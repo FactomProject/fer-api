@@ -2,14 +2,13 @@
 package main
 
 import (
-	"encoding/hex"
-	"fmt"
-	"github.com/FactomProject/factom"
-	ed "github.com/FactomProject/ed25519"
-	"github.com/FactomProject/goleveldb/leveldb/errors"
-	"encoding/json"
 	"bytes"
-
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	ed "github.com/FactomProject/ed25519"
+	"github.com/FactomProject/factom"
+	"github.com/FactomProject/goleveldb/leveldb/errors"
 )
 
 
@@ -59,6 +58,7 @@ func CreateFEREntryAndReveal() (Entry string, Reveal string, targetPriceInDollar
 
 
 	// Read some values for the FEREntry from the stdIn
+	fmt.Println("HI")
 	uintValue, err := readStdinUint("Enter the entry expiration height: ", "Bad exipration height", 32)
 	if (err != nil) { return }
 	theFEREntry.ExpirationHeight = uint32(uintValue)
