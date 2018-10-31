@@ -9,6 +9,7 @@ import (
 	ed "github.com/FactomProject/ed25519"
 	"github.com/FactomProject/factom"
 	"github.com/FactomProject/goleveldb/leveldb/errors"
+	"strconv"
 )
 
 
@@ -22,8 +23,8 @@ type FEREntry struct {
 }
 
 
-
-func CreateFEREntryAndReveal() (Entry string, Reveal string, targetPriceInDollars float64, newECAddress string, err error) {
+//ExpirationHeight string, ActivationHeight string, Priority string, TargetPrice string
+func CreateFEREntryAndReveal(ExpirationHeight string, ActivationHeight string, Priority string, TargetPrice string) (Entry string, Reveal string, targetPriceInDollars float64, newECAddress string, err error) {
 
 	// Read the config file
 	config, err := readConfigFile("FactomFER.conf")
@@ -56,23 +57,50 @@ func CreateFEREntryAndReveal() (Entry string, Reveal string, targetPriceInDollar
 	copy(signingPrivateKey[:], signingBytes[:])
 	_ = ed.GetPublicKey(&signingPrivateKey)  // Needed to format the public half of the key set
 
-
-	// Read some values for the FEREntry from the stdIn
-	fmt.Println("HI")
-	uintValue, err := readStdinUint("Enter the entry expiration height: ", "Bad exipration height", 32)
-	if (err != nil) { return }
+	uExpirationHeight, err := strconv.ParseUint(ExpirationHeight, 10, 32)
+	if err != nil {
+		fmt.Println(err)
+	}
+	uintValue := uExpirationHeight
 	theFEREntry.ExpirationHeight = uint32(uintValue)
-	uintValue, err = readStdinUint("Enter the target activation height: ", "Bad target activation height", 32)
-	if (err != nil) { return }
+
+	uActivationHeight, err := strconv.ParseUint(ActivationHeight, 10, 32)
+	if err != nil {
+		fmt.Println(err)
+	}
+	uintValue = uActivationHeight
 	theFEREntry.TargetActivationHeight = uint32(uintValue)
-	uintValue, err = readStdinUint("Enter the entry priority: ", "Bad priority", 32)
-	if (err != nil) { return }
+
+	uPriority, err := strconv.ParseUint(Priority, 10, 32)
+	if err != nil {
+		fmt.Println(err)
+	}
+	uintValue = uPriority
 	theFEREntry.Priority = uint32(uintValue)
-	uintValue, err = readStdinUint("Enter the new Factoshis Per EC: ", "Bad Factoshis Per EC", 64)
-	if (err != nil) { return }
+
+	uTargetPrice, err := strconv.ParseUint(TargetPrice, 10, 64)
+	if err != nil {
+		fmt.Println(err)
+	}
+	uintValue = uTargetPrice
 	theFEREntry.TargetPrice = uintValue
 
 	entryJson, err := json.Marshal(theFEREntry)
+
+	//uintValue, err := readStdinUint("Enter the entry expiration height: ", "Bad exipration height", 32)
+	//if (err != nil) { return }
+	//theFEREntry.ExpirationHeight = uint32(uintValue)
+	//uintValue, err = readStdinUint("Enter the target activation height: ", "Bad target activation height", 32)
+	//if (err != nil) { return }
+	//theFEREntry.TargetActivationHeight = uint32(uintValue)
+	//uintValue, err = readStdinUint("Enter the entry priority: ", "Bad priority", 32)
+	//if (err != nil) { return }
+	//theFEREntry.Priority = uint32(uintValue)
+	//uintValue, err = readStdinUint("Enter the new Factoshis Per EC: ", "Bad Factoshis Per EC", 64)
+	//if (err != nil) { return }
+	//theFEREntry.TargetPrice = uintValue
+	//
+	//entryJson, err := json.Marshal(theFEREntry)
 
 	if err != nil {
 		return "", "", 0.0, "", errors.New("Could not marshal the data into an FEREntry")

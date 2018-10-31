@@ -15,7 +15,7 @@ import (
 
 var (
 	webServer *web.Server
-	pflag = flag.Int("p", 9999, "set the port to host the wsapi")
+	pflag     = flag.Int("p", 9999, "set the port to host the wsapi")
 )
 
 const httpBad = 400
@@ -88,7 +88,17 @@ func handleV2Request(j *factom.JSON2Request) (*factom.JSON2Response, *factom.JSO
 }
 
 func handleGenerateECAddress(params []byte) (interface{}, *factom.JSONError) {
-	entry, reveal, targetPriceInDollars, ecAddress, err := CreateFEREntryAndReveal()
+	respParams := new(ChangeResponse)
+	errParams := json.Unmarshal(params, &respParams)
+	if errParams != nil {
+		return nil, newInvalidRequestError()
+	}
+	fmt.Println("ExpirationHeight: ", respParams.ExpirationHeight)
+	fmt.Println("ActivationHeight: ", respParams.ActivationHeight)
+	fmt.Println("Priority: ", respParams.Priority)
+	fmt.Println("NewPricePerEC: ", respParams.NewPricePerEC)
+
+	entry, reveal, targetPriceInDollars, ecAddress, err := CreateFEREntryAndReveal(respParams.ExpirationHeight, respParams.ActivationHeight, respParams.Priority, respParams.NewPricePerEC)
 	if (err != nil) {
 		fmt.Println("Error: ", err)
 		return nil, newCustomInternalError(err.Error())
@@ -96,7 +106,7 @@ func handleGenerateECAddress(params []byte) (interface{}, *factom.JSONError) {
 
 	compositionString := GetCurlOutputForComposition(entry, reveal, targetPriceInDollars, ecAddress)
 
-	fmt.Println(compositionString)
+	fmt.Println("compositionString: ",compositionString)
 
 	_, err = WriteToFile("FERComposeCurls.dat", compositionString)
 	if (err != nil) {
@@ -104,10 +114,16 @@ func handleGenerateECAddress(params []byte) (interface{}, *factom.JSONError) {
 		return nil, newCustomInternalError(err.Error())
 	}
 
-	return
+	fmt.Println("PARAMAS: %s", string(params[:]))
+
+	//return
 
 	r := new(addressResponse)
 	r.Public = "Good stuff boi"
+	r.EntryCommitJson = entry
+	r.RevealJson = reveal
+	r.TargetPriceInDollars = targetPriceInDollars
+	r.ECAddress = ecAddress
 	resp := r
 
 	return resp, nil
@@ -115,6 +131,16 @@ func handleGenerateECAddress(params []byte) (interface{}, *factom.JSONError) {
 
 type addressResponse struct {
 	Public string `json:"10/10 "`
+	EntryCommitJson string `json:"entry-commit"`
+	RevealJson string `json:"reveal-json"`
+	TargetPriceInDollars float64 `json:"target-price-in-dollars"`
+	ECAddress string `json:"ec-address"`
+}
+type ChangeResponse struct {
+	ExpirationHeight string `json:"expiration-height"`
+	ActivationHeight string `json:"activation-height"`
+	Priority         string `json:"priority"`
+	NewPricePerEC    string `json:"new-price-per-EC"`
 }
 
 // The main reads the config file, gets values from the command line for the FEREntry,
