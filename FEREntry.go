@@ -87,21 +87,6 @@ func CreateFEREntryAndReveal(ExpirationHeight string, ActivationHeight string, P
 
 	entryJson, err := json.Marshal(theFEREntry)
 
-	//uintValue, err := readStdinUint("Enter the entry expiration height: ", "Bad exipration height", 32)
-	//if (err != nil) { return }
-	//theFEREntry.ExpirationHeight = uint32(uintValue)
-	//uintValue, err = readStdinUint("Enter the target activation height: ", "Bad target activation height", 32)
-	//if (err != nil) { return }
-	//theFEREntry.TargetActivationHeight = uint32(uintValue)
-	//uintValue, err = readStdinUint("Enter the entry priority: ", "Bad priority", 32)
-	//if (err != nil) { return }
-	//theFEREntry.Priority = uint32(uintValue)
-	//uintValue, err = readStdinUint("Enter the new Factoshis Per EC: ", "Bad Factoshis Per EC", 64)
-	//if (err != nil) { return }
-	//theFEREntry.TargetPrice = uintValue
-	//
-	//entryJson, err := json.Marshal(theFEREntry)
-
 	if err != nil {
 		return "", "", 0.0, "", errors.New("Could not marshal the data into an FEREntry")
 	}

@@ -74,8 +74,6 @@ func handleV2Request(j *factom.JSON2Request) (*factom.JSON2Response, *factom.JSO
 		return nil, jsonError
 	}
 
-	fmt.Printf("API V2 method: <%v>  parameters: %s\n", j.Method, params)
-
 	jsonResp := factom.NewJSON2Response()
 	jsonResp.ID = j.ID
 	if b, err := json.Marshal(resp); err != nil {
@@ -93,30 +91,12 @@ func handleGenerateECAddress(params []byte) (interface{}, *factom.JSONError) {
 	if errParams != nil {
 		return nil, newInvalidRequestError()
 	}
-	fmt.Println("ExpirationHeight: ", respParams.ExpirationHeight)
-	fmt.Println("ActivationHeight: ", respParams.ActivationHeight)
-	fmt.Println("Priority: ", respParams.Priority)
-	fmt.Println("NewPricePerEC: ", respParams.NewPricePerEC)
 
 	entry, reveal, targetPriceInDollars, ecAddress, err := CreateFEREntryAndReveal(respParams.ExpirationHeight, respParams.ActivationHeight, respParams.Priority, respParams.NewPricePerEC)
 	if (err != nil) {
 		fmt.Println("Error: ", err)
 		return nil, newCustomInternalError(err.Error())
 	}
-
-	compositionString := GetCurlOutputForComposition(entry, reveal, targetPriceInDollars, ecAddress)
-
-	fmt.Println("compositionString: ",compositionString)
-
-	_, err = WriteToFile("FERComposeCurls.dat", compositionString)
-	if (err != nil) {
-		fmt.Println("Error: ", err)
-		return nil, newCustomInternalError(err.Error())
-	}
-
-	fmt.Println("PARAMAS: %s", string(params[:]))
-
-	//return
 
 	r := new(addressResponse)
 	r.Public = "Good stuff boi"
@@ -151,22 +131,4 @@ func main() {
 	webServer = web.NewServer()
 	webServer.Post("/change-price", handleV2)
 	webServer.Run(fmt.Sprintf(":%d", port))
-
-	//entry, reveal, targetPriceInDollars, ecAddress, err := CreateFEREntryAndReveal()
-	//if (err != nil) {
-	//	fmt.Println("Error: ", err)
-	//	return
-	//}
-	//
-	//compositionString := GetCurlOutputForComposition(entry, reveal, targetPriceInDollars, ecAddress)
-	//
-	//fmt.Println(compositionString)
-	//
-	//_, err = WriteToFile("FERComposeCurls.dat", compositionString)
-	//if (err != nil) {
-	//	fmt.Println("Error: ", err)
-	//	return
-	//}
-	//
-	//return
 }

@@ -2,16 +2,16 @@
 *
 *   WARNING:  You a making an FERChain entry with the following data:
 *
-*      {"jsonrpc":"2.0","id":5,"params":{"message":"000166cb4a0cbefce4532297a5d823aa288eeac554cdd2262c0f2620a43b665469620080c2d14b013b6a27bcceb6a42d62a3a8d02a6f0d73653215771de243a63ac048a18b59da298123eb933fd7d7ae943fb6ef44ded44a23143fe135454780789e265871b6a217053c880a0fe5008069ad9f0e135824607509ae2d4db653ac88cd0c8c7c27540f"},"method":"commit-entry"}
+*      {"jsonrpc":"2.0","id":7,"params":{"message":"000166cfc6cd73a9f1ef41ae207962b87cb47b1de5ecf92e47207a507f454cba68b691a62c880c013b6a27bcceb6a42d62a3a8d02a6f0d73653215771de243a63ac048a18b59da2934736261df5ca6e48e0ba0de3de550715083cf57e8a6ff5e65959b06e356e7f0d07f8424c966b92d59b54bf65258d1780985a6aafd05cc197bdb0444a633d40b"},"method":"commit-entry"}
 *   Implied factoid price:
 *
-*      $20.00
+*      $4.72
 ***************************************************************************************************
 
 Entry Credit Address that pays for this Entry: EC2DKSYyRcNWf7RS963VFYgMExoHRYLHVeCfQ9PGPmNzwrcmgm2r
 ***************************************************************************************************
 
-    curl -i -X POST -H 'Content-Type: application/json' -d '{"jsonrpc":"2.0","id":5,"params":{"message":"000166cb4a0cbefce4532297a5d823aa288eeac554cdd2262c0f2620a43b665469620080c2d14b013b6a27bcceb6a42d62a3a8d02a6f0d73653215771de243a63ac048a18b59da298123eb933fd7d7ae943fb6ef44ded44a23143fe135454780789e265871b6a217053c880a0fe5008069ad9f0e135824607509ae2d4db653ac88cd0c8c7c27540f"},"method":"commit-entry"}' localhost:8088/v2
+    curl -i -X POST -H 'Content-Type: application/json' -d '{"jsonrpc":"2.0","id":7,"params":{"message":"000166cfc6cd73a9f1ef41ae207962b87cb47b1de5ecf92e47207a507f454cba68b691a62c880c013b6a27bcceb6a42d62a3a8d02a6f0d73653215771de243a63ac048a18b59da2934736261df5ca6e48e0ba0de3de550715083cf57e8a6ff5e65959b06e356e7f0d07f8424c966b92d59b54bf65258d1780985a6aafd05cc197bdb0444a633d40b"},"method":"commit-entry"}' localhost:8088/v2
 
-    curl -i -X POST -H 'Content-Type: application/json' -d '{"jsonrpc":"2.0","id":6,"params":{"entry":"00111111118d918a8be684e0dac725493a75862ef96d2d3f43f84b26969329bf030042004044617aa01674bfdcc51119c0548958154840679f05ac464e4c239dd97d7f83f7a9139f59988e4c33bad6233fa2fd945b7f6f4adb7e3bb444f68af8dc7442ba077b2265787069726174696f6e5f686569676874223a36382c227461726765745f61637469766174696f6e5f686569676874223a36372c227072696f72697479223a312c227461726765745f7072696365223a353030302c2276657273696f6e223a22312e30227d"},"method":"reveal-entry"}' localhost:8088/v2
+    curl -i -X POST -H 'Content-Type: application/json' -d '{"jsonrpc":"2.0","id":8,"params":{"entry":"00111111118d918a8be684e0dac725493a75862ef96d2d3f43f84b26969329bf03004200401d94f0198baa6700a5bdde04590ea943d06baaef29eb6bf9ae77941f577e2d1f296be5c909da607ae9abd736c33daa0ffa445fb1e3a56337c219f8f0b60d8e0b7b2265787069726174696f6e5f686569676874223a3137342c227461726765745f61637469766174696f6e5f686569676874223a3137332c227072696f72697479223a312c227461726765745f7072696365223a32313230302c2276657273696f6e223a22312e30227d"},"method":"reveal-entry"}' localhost:8088/v2
 
