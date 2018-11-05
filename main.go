@@ -110,7 +110,7 @@ func handleGenerateECAddress(params []byte) (interface{}, *factom.JSONError) {
 
 type addressResponse struct {
 	EntryCommitJson string `json:"entry-commit"`
-	RevealJson string `json:"reveal-json"`
+	RevealJson string `json:"reveal-entry"`
 	TargetPriceInDollars float64 `json:"target-price-in-dollars"`
 	ECAddress string `json:"ec-address"`
 }
