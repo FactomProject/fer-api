@@ -1,5 +1,5 @@
 hash: a789881acb56fff7216dd4cb2b23e965c09458b022cf295c021a283e71ee6379
-updated: 2017-06-19T16:55:57.005065171-05:00
+updated: 2018-12-11T11:22:39.636257153-06:00
 imports:
 - name: github.com/BurntSushi/toml
   version: b26d9c308763d68093482582cea63d69be07a0f0
@@ -33,9 +33,15 @@ imports:
   - leveldb/util
 - name: github.com/FactomProject/netki-go-partner-client
   version: 426acb535e66cc2f9e6226ae254555e3572fd142
+- name: github.com/FactomProject/web
+  version: 7daee1bf727fc2cd9142b9a73a797f98b3180756
 - name: golang.org/x/crypto
   version: bed12803fa9663d7aa2c2346b0c634ad2dcd43b7
   subpackages:
   - pbkdf2
   - ripemd160
+- name: golang.org/x/net
+  version: d866cfc389cec985d6fda2859936a575a55a3ab6
+  subpackages:
+  - websocket
 testImports: []
